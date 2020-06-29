@@ -22,18 +22,21 @@
       {% endfor %}
     </ul>
     <hr>
-    <h2>Add a passenger</h2>
-    <form action="{% url 'book' flight.id %}" method="post">
-      {% if non_passengers %}
+    {% if non_passengers %}
+      <h2>Add a passenger</h2>
+      <form action="{% url 'book' flight.id %}" method="post">
+        {% csrf_token %}
         <select name="passenger">
           {% for passenger in non_passengers %}
             <option value="{{ passenger.id }}">{{ passenger }}</option>
           {% endfor %}
         </select>
         <input type="submit" value="Book flight">
-      {% else %}
-        <div>No passengers to add</div>
-      {% endif %}
-    </form>
+      </form>
+    {% else %}
+      <div>No passengers to add</div>
+    {% endif %}
+    <hr>
+
     <a href="{% url 'index' %}">Back to full listing</a>
 {% endblock %}
